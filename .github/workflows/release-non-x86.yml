@@ -53,7 +53,7 @@ jobs:
               mv ${targetarch}/displaylink-${VERSION}-${RELEASE}${EVDISOURCE}.${targetarch}.rpm ${os}-${osversion}-displaylink-${VERSION}-${RELEASE}${EVDISOURCE}.${targetarch}.rpm
               chown `id -u`:`id -g` -R .
               cp *.src.rpm /artifacts/
-              cp ${targetarch}/* /artifacts/
+              cp ${targetarch}/*.rpm /artifacts/
       
       - name: Get version
         run: |
