@@ -41,6 +41,13 @@ jobs:
                 targetarch: ${{ matrix.arch }}
             shell: /bin/sh
 
+            install: |
+              case "${{ matrix.distro }}" in
+                fedora*)
+                  dnf5 update -y
+                  dnf5 install -y rpm-build make gcc gcc-c++ libdrm-devel systemd-rpm-macros glibc-devel wget git "dnf5-command(builddep)"
+                  ;;
+
             run: |
               export "VERSION=$(grep ^VERSION Makefile | awk -F:= '{print $2}' | tr -d ' ')"
               export "RELEASE=$(grep ^RELEASE Makefile | awk -F:= '{print $2}' | tr -d ' ')"
@@ -52,7 +59,7 @@ jobs:
               mv displaylink-${VERSION}-${RELEASE}${EVDISOURCE}.src.rpm ${os}-${osversion}-displaylink-${VERSION}-${RELEASE}${EVDISOURCE}.src.rpm
               mv ${targetarch}/displaylink-${VERSION}-${RELEASE}${EVDISOURCE}.${targetarch}.rpm ${os}-${osversion}-displaylink-${VERSION}-${RELEASE}${EVDISOURCE}.${targetarch}.rpm
               chown `id -u`:`id -g` -R .
-              cp *.rpm /artifacts/
+              cp *.${targetarch}.rpm /artifacts/
       
       - name: Get version
         run: |
