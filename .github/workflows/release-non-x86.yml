@@ -47,6 +47,7 @@ jobs:
                   dnf5 update -y
                   dnf5 install -y rpm-build make gcc gcc-c++ libdrm-devel systemd-rpm-macros glibc-devel wget git "dnf5-command(builddep)"
                   ;;
+              esac
 
             run: |
               export "VERSION=$(grep ^VERSION Makefile | awk -F:= '{print $2}' | tr -d ' ')"
